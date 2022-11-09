@@ -7,6 +7,7 @@ import (
 	"bytes"
 	"crypto/md5"
 	"crypto/sha256"
+	"fmt"
 	"hash"
 	"testing"
 )
@@ -346,11 +347,15 @@ var table = []struct {
 }
 
 func TestNewTree(t *testing.T) {
-	for i := 0; i < len(table); i++ {
+	for i := 0; i < 1; i++ {
 		if !table[i].defaultHashStrategy {
 			continue
 		}
 		tree, err := NewTree(table[i].contents)
+		b := tree.MerkleRoot()
+		str := fmt.Sprintf("%x", b)
+		fmt.Printf("%s\n", str)
+		//fmt.Printf("%s", string(tree.MerkleRoot()))
 		if err != nil {
 			t.Errorf("[case:%d] error: unexpected error: %v", table[i].testCaseId, err)
 		}
